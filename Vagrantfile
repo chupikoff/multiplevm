@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 nodes = [
-	{ :hostname => 'vm1', :ip => '192.168.0.200', :memory => 512, :cpu => 1, :boxname => "centos/7", :bridge => "eth1" },
-        { :hostname => 'vm2', :ip => '192.168.0.201', :memory => 512, :cpu => 1, :boxname => "centos/7", :bridge => "eth1" }
+	{ :hostname => 'vm1', :ip => '192.168.0.200', :memory => 512, :cpu => 1, :boxname => "centos/7", :bridge => "wlp0s20f3" },
+        { :hostname => 'vm2', :ip => '192.168.0.201', :memory => 512, :cpu => 1, :boxname => "centos/7", :bridge => "wlp0s20f3" }
     
 ]
 
@@ -22,9 +22,9 @@ Vagrant.configure("2") do |config|
         end
   end
 
-#  config.vm.provision "ansible" do |ansible|
-#     ansible.playbook = "playbook.yml"
-#  end
+  config.vm.provision "ansible" do |ansible|
+     ansible.playbook = "playbook.yml"
+  end
   
 
 end

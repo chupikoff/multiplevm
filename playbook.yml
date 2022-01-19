@@ -1,0 +1,17 @@
+---
+- name: Install Apache and Upload my Web Page
+  hosts: all
+
+  tasks:
+  - name: Install Apache Web Server
+    yum: name=httpd state=latest
+    become: yes
+
+
+  - name: Start WebServer and make it enable on boot
+    service: name=httpd state=started enabled=yes
+    become: yes
+
+  - name: permit traffic in default zone for http service
+    shell: systemctl start firewalld.service && firewall-cmd --permanent --zone=public --add-service=http && firewall-cmd --permanent --zone=public --add-service=https && firewall-cmd --reload
+    become: yes
