@@ -15,3 +15,7 @@
   - name: permit traffic in default zone for http service
     shell: systemctl start firewalld.service && firewall-cmd --permanent --zone=public --add-service=http && firewall-cmd --permanent --zone=public --add-service=https && firewall-cmd --reload
     become: yes
+
+  - name: print hello!
+    shell: echo "Hello!" >> /home/vagrant/hello.txt
+... 
