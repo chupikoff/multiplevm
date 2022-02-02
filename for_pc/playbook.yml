@@ -1,0 +1,28 @@
+---
+- name: Install Apache and Upload my Web Page
+  hosts: all
+  become: yes
+  tasks:
+  - name: Install httpd Web Server
+    yum: name=httpd state=latest
+    when: ansible_os_family == "RedHat"
+  
+  - name: Install apache
+    apt: name=apache2 state=latest  
+    when: ansible_os_family == "Debian"
+
+  - name: Start WebServer and make it enable on boot
+    service: name=httpd state=started enabled=yes
+    when: ansible_os_family == "RedHat"
+
+  - name: Start WebServer and make it enable on boot
+    service: name=apache2 state=started enabled=yes
+    when: ansible_os_family == "Debian"
+
+
+  - name: permit traffic in default zone for http service
+    shell: systemctl start firewalld.service && firewall-cmd --permanent --zone=public --add-service=http && firewall-cmd --permanent --zone=public --add-service=https && firewall-cmd --reload
+
+  - name: print hello!
+    shell: echo "Hello!" >> /home/vagrant/hello.txt
+... 
